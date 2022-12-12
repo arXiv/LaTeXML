@@ -29,8 +29,67 @@ DefEnvironment('{frontmatter}', '#body');
 
 # \title{}
 # single author!
+# DefMacro('\author[]{}',
+#   '\@add@frontmatter{ltx:creator}[role=author]{\@personname{#2}}');
+
+# TODO: MAKE SURE TO CHECK FOR OPTIONAL ARG AND SET UNDEF IF MISSING
+
+DefKeyVal('affilrefs', 'organization', '', 'Cornell University');
+DefKeyVal('affilrefs', 'addressline', '', '123 Something St.');
+DefKeyVal('affilrefs', 'city', '', 'Ithaca');
+DefKeyVal('affilrefs', 'state', '', 'NY');
+DefKeyVal('affilrefs', 'postcode', '', '01234');
+DefKeyVal('affilrefs', 'country', '', 'United States');
+
 DefMacro('\author[]{}',
-  '\@add@frontmatter{ltx:creator}[role=author]{\@personname{#2}}');
+  '\@add@frontmatter{ltx:creator}[role=author]{\personname[#1]{#2}}');
+
+sub convert_affil {
+  my ($affil) = @_;
+  my $cur_letter = LookupValue('@CUR@AFFIL@LETTER');
+  my %affil_map = LookupValue('@AFFIL@STR');
+  if ($cur_letter) {
+    if ($affil_map{$affil}) {
+      return $affil_map{$affil};
+    } else {
+      $affil_map{$affil} = T_LETTER($cur_letter);
+      AssignValue('@CUR@AFFIL@LETTER', ++$cur_letter, 'global');
+      AssignValue('@AFFIL@STR', %affil_map, 'global');
+      return T_LETTER($cur_letter);
+    }
+  } else {
+    AssignValue('@CUR@AFFIL@LETTER', 'a', 'global');
+    AssignValue('@AFFIL@STR', ($affil => T_LETTER('a')), 'global');
+    return T_LETTER('a');
+  }
+}
+
+# DefMacro ('\personname[]{}', '\@personname{#2\textsuperscript{#1}}');
+
+DefMacro ('\personname[]{}', sub {
+  my ($gullet, $opt, $arg) = @_;
+  return Invocation(T_CS('\@personname'), Tokens($arg, T_CS('\textsuperscript'), 
+    T_BEGIN, convert_affil($opt), T_END));
+});
+
+DefMacro ('\affiliation[]{}', '\@add@to@frontmatter{ltx:creator}{\@@@affiliation[#1]{#2}}');
+
+DefMacro ('\@@@affiliation[] RequiredKeyVals:affilrefs', sub {
+  my ($gullet, $opt, $arg) = @_;  
+  my @keyvals = $arg->getPairs;
+  my @fields = (T_CS('\textsuperscript'), T_BEGIN, $opt, T_END);
+  while (@keyvals) {
+      shift(@keyvals);  
+      push(@fields, shift(@keyvals));
+      if (@keyvals) {
+        push(@fields, T_LETTER(','));
+        push(@fields, T_SPACE);
+      }
+  }
+  return Invocation(T_CS('\@@@@affiliation'), Tokens(@fields));
+});
+
+DefConstructor ('\@@@@affiliation{}', "^ <ltx:contact role='affiliation'>#1</ltx:contact>");
 
 DefMacro('\address[]{}', '\lx@contact{address}{#2}');
 # Redefine to account for the label, which we ignore for now!
@@ -42,6 +101,7 @@ DefMacro('\corauth[]{}',  '\lx@contact{correspondent}{#2}');
 DefMacro('\corref{}',     Tokens());
 DefMacro('\corauthref{}', Tokens());
 DefMacro('\cortext[]{}',  Tokens());
+
 
 # Is this significantly different?
 DefMacro('\collab OptionalMatch:* {}', '\author{#1}');
