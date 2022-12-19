@@ -42,34 +42,52 @@ DefKeyVal('affilrefs', 'postcode', '', '01234');
 DefKeyVal('affilrefs', 'country', '', 'United States');
 
 DefMacro('\author[]{}',
-  '\@add@frontmatter{ltx:creator}[role=author]{\personname[#1]{#2}}');
+ '\@add@frontmatter{ltx:creator}[role=author]{\personname[#1]{#2}}');
+    # Tokens(T_CS('\@add@frontmatter'), T_BEGIN, Tokenize('ltx:creator')->unlist, T_END, T_BEGIN,
+    # Tokenize('role=author')->unlist, T_END, T_BEGIN, T_CS('\personname'), T_BEGIN, Tokenize($_[1])->unlist, T_END,
+    # T_BEGIN, Tokenize($_[2])->unlist, T_END, T_END));
 
 sub convert_affil {
-  my ($affil) = @_;
-  my $cur_letter = LookupValue('@CUR@AFFIL@LETTER');
-  my %affil_map = LookupValue('@AFFIL@STR');
-  if ($cur_letter) {
-    if ($affil_map{$affil}) {
-      return $affil_map{$affil};
+  my ($inp) = @_;
+  my @affils = split(',', $inp->toString); #join("", map {$_ => $_->getString} $inp->unlist
+  my $outp = '';
+  my $i = 0;
+  for my $affil (@affils) {
+    my $cur_letter = LookupValue('@CUR@AFFIL@LETTER');
+    my %affil_map = LookupValue('@AFFIL@STR');
+
+    if ($cur_letter) {
+      if (exists $affil_map{$affil}) {
+        $outp .= $affil_map{$affil};
+      } else {
+        $affil_map{$affil} = $cur_letter;
+        AssignValue('@CUR@AFFIL@LETTER', ++$cur_letter, 'global');
+        AssignValue('@AFFIL@STR', %affil_map, 'global');
+        $outp .= $cur_letter;
+      }
     } else {
-      $affil_map{$affil} = T_LETTER($cur_letter);
-      AssignValue('@CUR@AFFIL@LETTER', ++$cur_letter, 'global');
-      AssignValue('@AFFIL@STR', %affil_map, 'global');
-      return T_LETTER($cur_letter);
+      AssignValue('@CUR@AFFIL@LETTER', 'a', 'global');
+      AssignValue('@AFFIL@STR', ($affil => 'a'), 'global');
+      $outp = 'a';
     }
-  } else {
-    AssignValue('@CUR@AFFIL@LETTER', 'a', 'global');
-    AssignValue('@AFFIL@STR', ($affil => T_LETTER('a')), 'global');
-    return T_LETTER('a');
+    if ($i < $#affils) { $outp .= ','; }
+    $i++;
   }
+  return Tokenize($outp);
 }
 
+# DefPrimitive ()
+#   my $affil_auth_flag = LookupValue ('@author@affil');
+#     if  (!$affil_auth_flag) {
+#       AssignValue('ghost_author', 1, 'global');
+      
+#     }
 # DefMacro ('\personname[]{}', '\@personname{#2\textsuperscript{#1}}');
 
 DefMacro ('\personname[]{}', sub {
   my ($gullet, $opt, $arg) = @_;
   return Invocation(T_CS('\@personname'), Tokens($arg, T_CS('\textsuperscript'), 
-    T_BEGIN, convert_affil($opt), T_END));
+    T_BEGIN, convert_affil($opt)->unlist, T_END));
 });
 
 DefMacro ('\affiliation[]{}', '\@add@to@frontmatter{ltx:creator}{\@@@affiliation[#1]{#2}}');
@@ -77,7 +95,8 @@ DefMacro ('\affiliation[]{}', '\@add@to@frontmatter{ltx:creator}{\@@@affiliation
 DefMacro ('\@@@affiliation[] RequiredKeyVals:affilrefs', sub {
   my ($gullet, $opt, $arg) = @_;  
   my @keyvals = $arg->getPairs;
-  my @fields = (T_CS('\textsuperscript'), T_BEGIN, $opt, T_END);
+  my %affil_map = LookupValue('@AFFIL@STR');
+  my @fields = (T_CS('\textsuperscript'), T_BEGIN, Tokenize($affil_map{$opt->toString}), T_END); # join("", map {$_ => $_->getString} $opt->unlist)
   while (@keyvals) {
       shift(@keyvals);  
       push(@fields, shift(@keyvals));
