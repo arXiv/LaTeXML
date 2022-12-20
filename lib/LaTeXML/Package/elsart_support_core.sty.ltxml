@@ -89,7 +89,7 @@ DefMacro ('\personname[]{}', sub {
     T_BEGIN, convert_affil($opt)->unlist, T_END));
 });
 
-DefMacro ('\affiliation[]{}', '\@add@frontmatter{ltx:creator}{\@@@affiliation[#1]{#2}}');
+DefMacro ('\affiliation[]{}', '\@add@to@frontmatter{ltx:creator}{\@@@affiliation[#1]{#2}}');
 
 DefMacro ('\@@@affiliation[] RequiredKeyVals:affilrefs', sub {
   my ($gullet, $opt, $arg) = @_;  
