@@ -54,20 +54,19 @@ sub convert_affil {
   my $i = 0;
   for my $affil (@affils) {
     my $cur_letter = LookupValue('@CUR@AFFIL@LETTER');
-    my %affil_map = LookupValue('@AFFIL@STR');
+    my $affil_map = LookupValue('@AFFIL@STR@' . $affil);
 
     if ($cur_letter) {
-      if (exists $affil_map{$affil}) {
-        $outp .= $affil_map{$affil};
+      if ($affil_map) {
+        $outp .= $affil_map;
       } else {
-        $affil_map{$affil} = $cur_letter;
         AssignValue('@CUR@AFFIL@LETTER', ++$cur_letter, 'global');
-        AssignValue('@AFFIL@STR', %affil_map, 'global');
+        AssignValue('@AFFIL@STR@' . $affil, $cur_letter, 'global');
         $outp .= $cur_letter;
       }
     } else {
       AssignValue('@CUR@AFFIL@LETTER', 'a', 'global');
-      AssignValue('@AFFIL@STR', ($affil => 'a'), 'global');
+      AssignValue('@AFFIL@STR@' . $affil, 'a', 'global');
       $outp = 'a';
     }
     if ($i < $#affils) { $outp .= ','; }
@@ -90,13 +89,12 @@ DefMacro ('\personname[]{}', sub {
     T_BEGIN, convert_affil($opt)->unlist, T_END));
 });
 
-DefMacro ('\affiliation[]{}', '\@add@to@frontmatter{ltx:creator}{\@@@affiliation[#1]{#2}}');
+DefMacro ('\affiliation[]{}', '\@add@frontmatter{ltx:creator}{\@@@affiliation[#1]{#2}}');
 
 DefMacro ('\@@@affiliation[] RequiredKeyVals:affilrefs', sub {
   my ($gullet, $opt, $arg) = @_;  
   my @keyvals = $arg->getPairs;
-  my %affil_map = LookupValue('@AFFIL@STR');
-  my @fields = (T_CS('\textsuperscript'), T_BEGIN, Tokenize($affil_map{$opt->toString}), T_END); # join("", map {$_ => $_->getString} $opt->unlist)
+  my @fields = (T_CS('\textsuperscript'), T_BEGIN, convert_affil($opt), T_END); # join("", map {$_ => $_->getString} $opt->unlist)
   while (@keyvals) {
       shift(@keyvals);  
       push(@fields, shift(@keyvals));
@@ -108,7 +106,7 @@ DefMacro ('\@@@affiliation[] RequiredKeyVals:affilrefs', sub {
   return Invocation(T_CS('\@@@@affiliation'), Tokens(@fields));
 });
 
-DefConstructor ('\@@@@affiliation{}', "^ <ltx:contact role='affiliation'>#1</ltx:contact>");
+DefConstructor ('\@@@@affiliation{}', "<ltx:contact role='affiliation'>#1</ltx:contact>");
 
 DefMacro('\address[]{}', '\lx@contact{address}{#2}');
 # Redefine to account for the label, which we ignore for now!
