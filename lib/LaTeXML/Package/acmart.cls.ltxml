@@ -74,14 +74,33 @@ DefMacro('\keywords{}',            '\@add@frontmatter{ltx:keywords}{#1}');
 DefMacro('\terms{}',               '\@add@frontmatter{ltx:keywords}{#1}');
 
 # Accessible figure descriptions
-NewCounter('acmlabel');
-DefConstructor('\Description[]{}', '^^<ltx:inline-block xml:id="#id" class="ltx_nodisplay">#2</ltx:inline-block>',
-  properties => sub { ('width' => Dimension(0), 'height' => Dimension(0), RefStepCounter('acmlabel')) },
+NewCounter('acm-accessible');
+#  A good use of ARIA is to always have a label provided, as it will always be announced.
+# short and long arguments are equivalent ARIA "label" and "description" conceptually,
+#   but if we only have the short argument - there is no description
+#   and if we only have the long argument - there is also no description and we use it as the label.
+#
+# Note that if both arguments are left empty, we deposit no markup.
+DefConstructor('\Description[]{}',
+  '^^?#short('
+    . '<ltx:inline-block xml:id="#id?#id(-label)" class="ltx_nodisplay">#short</ltx:inline-block>'
+    . '?#long('
+    . '<ltx:inline-block xml:id="#id?#id(-description)" class="ltx_nodisplay">#long</ltx:inline-block>)'
+    . ')(?#long(<ltx:inline-block xml:id="#id?#id(-label)" class="ltx_nodisplay">#long</ltx:inline-block>))',
+  properties => sub { ('width' => Dimension(0), 'height' => Dimension(0),
+      'short' => ToString($_[1]), 'long' => ToString($_[2]),
+      RefStepCounter('acm-accessible')) },
   beforeConstruct => sub {
     my ($document, $whatsit) = @_;
     # For now we only use the long description. (Do we have good uses for the short description?)
     my $figure = $document->getElement;
-    $document->setAttribute($figure, 'aria:labelledby', $whatsit->getProperty('id'));
+    my $short  = $whatsit->getProperty('short');
+    my $long   = $whatsit->getProperty('long');
+    my $id     = $whatsit->getProperty('id');
+    if ($short || $long) {
+      $document->setAttribute($figure, 'aria:labelledby', $id . "-label"); }
+    if ($short && $long) {
+      $document->setAttribute($figure, 'aria:describedby', $id . "-description"); }
     return; });
 
 # Use multiple style, repeating \author, \orcid, \affiliation, \email as needed.

@@ -1,11 +1,28 @@
 \documentclass[acmsmall]{acmart}
 \usepackage{subfigure}
 \begin{document}
+% both label and description
 \begin{figure}
   \subfigure{example-a}
   \subfigure{example-b}
   \caption{caption text}
   \label{fig:one}
   \Description[Fly 1 and Fly 2 look identical]{Fly 1 and fly 2 comparison shows identical length, wingspan, and overall bodily structure.}
+  \end{figure}
+% only label - short
+\begin{figure}
+  \subfigure{example-c}
+  \subfigure{example-d}
+  \caption{caption text}
+  \label{fig:two}
+  \Description[Fly 1 and Fly 2 look short]{}
+  \end{figure}
+% only label - long
+\begin{figure}
+  \subfigure{example-a}
+  \subfigure{example-b}
+  \caption{caption text}
+  \label{fig:three}
+  \Description[]{Fly 1 and fly 2 comparison shows a longer description.}
   \end{figure}
 \end{document}
