@@ -20,13 +20,17 @@ based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/com
 
 ### Changes
 
-  -  `[PRE]` ...
+  -  `[PRE]` patch for argument order of \Description in acmart.cls.ltxml
+  -  `[PRE]` update refactor for text underscore (PR #2704)
+  -  `[PRE]` Robust on raw perl value instead of register value (PR #2693)
+  -  `[PRE]` add \overunderset to amsmath.sty (PR #2687)
+  -  `[PRE]` implement actualtext, artifact from recent graphicx (PR #2684)
+  -  `[PRE]` arXiv-style bibtex emulation (.bbl then .bib) (PR #2683)
 
 ### Added
 - new support for `page` option of `\includegraphics`
 
 ### Changes
-- Refined ARIA support for `\Description` in acmart.cls
 - Better kernel emulation of space tokens, as well as `\meaning` and `\string`
 - extra robustness patches avoiding Fatal conditions found in arXiv
 - Internal API changes
@@ -39,7 +43,7 @@ based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/com
 
 - `[arXiv worker]` Enabled raw interpretation of all `.sty` files
 - `[arXiv worker]` Enabled pre-compiled kernel support in latexml
-  Note: `.cls` files are still NOT interpreted raw and need a `.cls.ltxml` binding.
+   - Note: `.cls` files are still NOT interpreted raw and need a `.cls.ltxml` binding.
 - `[arXiv worker]` Enabled `intent=":literal"` accessible annotations on all MathML Core formulas.
 
 [brucemiller/latexml commit 25ec2b0](https://github.com/brucemiller/LaTeXML/commit/25ec2b0e9070cc05cbb5e5e22bebf5ba98a0d86c)
