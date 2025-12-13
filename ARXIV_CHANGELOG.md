@@ -26,6 +26,10 @@ based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/com
 -  `[PRE]` Robust on raw perl value instead of register value (PR #2693)
 -  `[PRE]` add \overunderset to amsmath.sty (PR #2687)
 -  `[PRE]` implement actualtext, artifact from recent graphicx (PR #2684)
+-  `[PRE]` bump \fmtversion to 2021/06/01 (PR #2654)
+-  `[PRE]` support calc.sty's redefinitions (PR #2652)
+-  `[PRE]` do not return comment tokens during readBalanced (PR #2632)
+-  `[PRE]` hyperref and hyperxmp metadata improvements (PR #2365)
 
 - update refactor for text underscore (PR #2704)
 - arXiv-style bibtex emulation (.bbl then .bib) (PR #2683)
