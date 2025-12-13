@@ -13,27 +13,25 @@ To track the main upstream LaTeXML development, please see its [Changes](https:/
 ## velocity-v0.9-preview-3 (2025-17-12)
 
 [arXiv/latexml commit pending](#)
-based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/commit/4175d31afc8da61039adffaf8e42657196bff071)
+based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/commit/3875cd64faeb5bdc275d595cb6af772958a51080)
 
 ### Toolchain
-  - `[arXiv worker]` New minimal bindings for savetrees.sty.ltxml
-
-### Changes
-
-  -  `[PRE]` patch for argument order of \Description in acmart.cls.ltxml
-  -  `[PRE]` update refactor for text underscore (PR #2704)
-  -  `[PRE]` Robust on raw perl value instead of register value (PR #2693)
-  -  `[PRE]` add \overunderset to amsmath.sty (PR #2687)
-  -  `[PRE]` implement actualtext, artifact from recent graphicx (PR #2684)
-  -  `[PRE]` arXiv-style bibtex emulation (.bbl then .bib) (PR #2683)
+- `[arXiv worker]` New minimal bindings for savetrees.sty.ltxml
 
 ### Added
 - new support for `page` option of `\includegraphics`
 
 ### Changes
-- Better kernel emulation of space tokens, as well as `\meaning` and `\string`
+-  `[PRE]` patch for argument order of \Description in acmart.cls.ltxml
+-  `[PRE]` Robust on raw perl value instead of register value (PR #2693)
+-  `[PRE]` add \overunderset to amsmath.sty (PR #2687)
+-  `[PRE]` implement actualtext, artifact from recent graphicx (PR #2684)
+
+- update refactor for text underscore (PR #2704)
+- arXiv-style bibtex emulation (.bbl then .bib) (PR #2683)
+- better kernel emulation of space tokens, as well as `\meaning` and `\string`
 - extra robustness patches avoiding Fatal conditions found in arXiv
-- Internal API changes
+- internal API changes
   - readingFromMouth
 - updates to grffile.sty.ltxml, orcidlink.sty.ltxml, aastex, marvosym.sty.ltxml
 
