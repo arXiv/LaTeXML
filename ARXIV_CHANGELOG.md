@@ -30,6 +30,7 @@ based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/com
 -  `[PRE]` support calc.sty's redefinitions (PR #2652)
 -  `[PRE]` do not return comment tokens during readBalanced (PR #2632)
 -  `[PRE]` hyperref and hyperxmp metadata improvements (PR #2365)
+-  `[PRE]` \pgfmathparse parsing improvements, benefiting pgfplots (PR #2485, PR #2711)
 
 - update refactor for text underscore (PR #2704)
 - arXiv-style bibtex emulation (.bbl then .bib) (PR #2683)
