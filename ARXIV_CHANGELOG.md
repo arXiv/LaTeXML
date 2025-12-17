@@ -16,7 +16,7 @@ To track the main upstream LaTeXML development, please see its [Changes](https:/
 based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/commit/3875cd64faeb5bdc275d595cb6af772958a51080)
 
 ### Toolchain
-- `[arXiv worker]` New minimal bindings for savetrees.sty.ltxml
+- `[arXiv worker]` New minimal bindings for savetrees.sty.ltxml, fontawesome.sty, fontawesome5.sty and some defensive stubs related to luatex.
 
 ### Added
 - new support for `page` option of `\includegraphics`
@@ -31,6 +31,7 @@ based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/com
 -  `[PRE]` do not return comment tokens during readBalanced (PR #2632)
 -  `[PRE]` hyperref and hyperxmp metadata improvements (PR #2365)
 -  `[PRE]` \pgfmathparse parsing improvements, benefiting pgfplots (PR #2485, PR #2711)
+-  `[PRE]` patch switch item-containing environments to internal_vertical mode (PR #2713)
 
 - update refactor for text underscore (PR #2704)
 - arXiv-style bibtex emulation (.bbl then .bib) (PR #2683)
