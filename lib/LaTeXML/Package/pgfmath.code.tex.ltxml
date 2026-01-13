@@ -770,7 +770,7 @@ REGISTER :  # these need to set dimension flag!!!
                           LaTeXML::Package::Pool::pgfmath_getdepth($item[2]); }
 | CS                   { LaTeXML::Package::Pool::pgfmath_register($item[1]); }
 
-CS : /\\[a-zA-Z@]*/
+CS : /\\[a-zA-Z_@]*/
 
 # NOTE: Need to recognize octal, binary and hex!  AND scientific notation!
 NUMBER :
