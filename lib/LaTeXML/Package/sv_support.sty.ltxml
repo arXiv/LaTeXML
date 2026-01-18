@@ -107,7 +107,6 @@ DefConstructor('\acknowledgements', "<ltx:acknowledgements name='#name'>",
 DefMacro('\acknowledgement', '\acknowledgements');
 DefConstructor('\endacknowledgements', "</ltx:acknowledgements>");
 DefConstructor('\endacknowledgement',  "</ltx:acknowledgements>");
-Tag("ltx:acknowledgements", autoClose => 1);
 
 DefMacro('\noteaddname', 'Note added in proof');
 DefMacro('\notename',    'Note');

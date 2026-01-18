@@ -155,7 +155,6 @@ Let('\ESpagenumber', '\arabic');
 
 DefConstructor('\ack',    "<ltx:acknowledgements>");
 DefConstructor('\endack', "</ltx:acknowledgements>");
-Tag("ltx:acknowledgements", autoClose => 1);
 
 #======================================================================
 # 6 Keywords

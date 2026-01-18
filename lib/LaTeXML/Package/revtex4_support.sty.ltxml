@@ -105,7 +105,6 @@ DefConstructor('\endacknowledgments', "</ltx:acknowledgements>");
 DefMacro('\acknowledgmentsname', 'Acknowledgements');
 Let('\acknowledgements',    '\acknowledgments');
 Let('\endacknowledgements', '\endacknowledgments');
-Tag("ltx:acknowledgements", autoClose => 1);
 
 # Extra stuff
 DefMacro('\thesection', '\Roman{section}');    # Apparently the desired style.

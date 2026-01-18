@@ -56,7 +56,6 @@ DefMacro('\keywords{}',   '\lx@add@keywords[name={\keywordsname~}]{#1}');
 DefConstructor('\acknowledgments', "<ltx:acknowledgements name='#name'>",
   properties => sub { (name => Digest(T_CS('\acknowlname'))); });
 DefConstructor('\endacknowledgments', "</ltx:acknowledgements>");
-Tag("ltx:acknowledgements", autoClose => 1);
 
 #======================================================================
 DefPrimitiveI('\hash', undef, '#');
@@ -305,5 +304,3 @@ DefMacro('\acknowlname',    'Acknowledgments');
 1;
 
 __END__
-
-
