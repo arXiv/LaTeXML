@@ -10,9 +10,24 @@ with dates roughly matching the update date of the live arXiv toolchain.
 
 To track the main upstream LaTeXML development, please see its [Changes](https://github.com/brucemiller/LaTeXML/blob/master/Changes) file.
 
-## velocity-v0.9-preview-3 (2025-17-12)
+## velocity-v0.9-preview-4 (2026-31-01)
 
 [arXiv/latexml commit pending](#)
+based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/commit/d81e955babef9508b4908af4ed08583f5c5e7b59)
+
+### Toolchain
+- `[arXiv worker]` New minimal bindings for 
+
+### Added
+- `[PRE]` Add abstract, acknowledgements, (+stabilize references) to navigational context ToC (PR #2746)
+
+### Changes
+- `[PRE]` patch for bbl-then-bib processing of bibliographies in arXiv (PR #2733)
+- `[PRE]` patch for latex3 command sequences in \pgfmathparse
+
+## velocity-v0.9-preview-3 (2025-17-12)
+
+[arXiv/latexml commit b36bda7](https://github.com/arXiv/LaTeXML/commit/b36bda7)
 based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/commit/3875cd64faeb5bdc275d595cb6af772958a51080)
 
 ### Toolchain
