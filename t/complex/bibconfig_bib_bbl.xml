@@ -8,7 +8,7 @@
   <para xml:id="p1">
     <p>bib</p>
   </para>
-  <bibliography bibstyle="plain" citestyle="numbers" files="bibconfig" xml:id="bib">
+  <bibliography bibstyle="plain" citestyle="numbers" files="bibconfig" inlist="toc" xml:id="bib">
     <title>References</title>
   </bibliography>
   <para xml:id="p2">
