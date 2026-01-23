@@ -16,7 +16,8 @@ To track the main upstream LaTeXML development, please see its [Changes](https:/
 based on [brucemiller/latexml commit](https://github.com/brucemiller/LaTeXML/commit/d81e955babef9508b4908af4ed08583f5c5e7b59)
 
 ### Toolchain
-- `[arXiv worker]` New minimal bindings for 
+- `[arXiv worker]` New defensive guards for svg-extract.sty, forest.sty, l3draw.sty, stix.sty, stix2.sty (not yet supported)
+- `[arXiv worker]` neutralize `\today` at document start, the current date is not informative in archival
 
 ### Added
 - `[PRE]` Add abstract, acknowledgements, (+stabilize references) to navigational context ToC (PR #2746)
