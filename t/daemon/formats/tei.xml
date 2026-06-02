@@ -677,7 +677,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
     </body>
     <back>
       <div type="acknowledgements">
-        <p xml:id="acknowledgements1">My Mommy.</p>
+        <p>My Mommy.</p>
       </div>
       <div type="references">
         <listBibl>

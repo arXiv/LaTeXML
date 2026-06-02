@@ -605,7 +605,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   </body>
   <back>
     <ack>
-      <p id="acknowledgements1">My Mommy.</p>
+      <p>My Mommy.</p>
     </ack>
     <ref-list>
       <title>References</title>
